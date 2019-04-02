@@ -1,5 +1,7 @@
 package br.com.fiap.paymentservice.service;
 
+import br.com.fiap.paymentservice.exceptionHandler.EmptyResultDataException;
+import br.com.fiap.paymentservice.exceptionHandler.InvalidDataException;
 import br.com.fiap.paymentservice.model.PaymentDTO;
 import br.com.fiap.paymentservice.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +20,25 @@ public class PaymentService {
     }
 
     public PaymentDTO findById(Long id) {
-        return paymentRepository.findById(id);
+        PaymentDTO paymentDTODb = paymentRepository.findById(id);
+        if(paymentDTODb == null){ throw new EmptyResultDataException(); }
+        return paymentDTODb;
     }
 
-    public PaymentDTO findByIdTransaction(String idTransaction) { return paymentRepository.findByIdTransaction(idTransaction); }
+    public PaymentDTO findByIdTransaction(String idTransaction) {
+        PaymentDTO paymentDTODb = paymentRepository.findByIdTransaction(idTransaction);
+        if(paymentDTODb == null){ throw new EmptyResultDataException(); }
+        return paymentDTODb;
+    }
 
-    public PaymentDTO save(PaymentDTO PaymentDTO){
-        return paymentRepository.save(PaymentDTO);
+    public PaymentDTO save(PaymentDTO paymentDTO){
+        if(paymentDTO.getCardNumber()==null){ throw new InvalidDataException(); }
+        return paymentRepository.save(paymentDTO);
     }
 
     public PaymentDTO update(Long id, PaymentDTO paymentDTO){
         PaymentDTO paymentDb = paymentRepository.findById(id);
-
-        if(paymentDb == null){
-            return null;
-        }
-
+        if(paymentDTO.getCardNumber()==null){ throw new InvalidDataException(); }
         paymentDTO.setId(paymentDb.getId());
         return paymentRepository.update(paymentDTO);
     }
