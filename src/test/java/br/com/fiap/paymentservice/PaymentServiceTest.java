@@ -21,13 +21,13 @@ public class PaymentServiceTest {
     private PaymentService paymentService;
 
     @Before
-    public void setUpMock() {
+    public void criaMock() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(paymentService.save(any(PaymentDTO.class))).thenReturn(new PaymentDTO());
     }
 
     @Test
-    public void lancamentoContabilServiceTest() {
+    public void savePaymentServiceTest() {
         Assert.assertNotNull(paymentService.save(new PaymentDTO()));
     }
 }

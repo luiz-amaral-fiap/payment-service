@@ -22,17 +22,17 @@ public class PaymentServiceControllerTest {
     private MockMvc mockMvc;
 
     @Before
-    public void setup() {
+    public void initMock() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
-    public void test_ok() throws Exception {
+    public void testPaymentOk() throws Exception {
         mockMvc.perform(get("/payment-service/")).andExpect(status().isOk());
     }
 
     @Test
-    public void testNotFound() throws Exception {
+    public void testPaymentNotFound() throws Exception {
         mockMvc.perform(get("/payment-service/9999")).andExpect(status().isNotFound());
     }
 }
