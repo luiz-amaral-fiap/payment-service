@@ -21,7 +21,7 @@ public class PaymentServiceTest {
     private PaymentService paymentService;
 
     @Before
-    public void criaMock() {
+    public void initMock() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(paymentService.save(any(PaymentDTO.class))).thenReturn(new PaymentDTO());
     }
