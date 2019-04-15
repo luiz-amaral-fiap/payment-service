@@ -2,6 +2,10 @@ package br.com.fiap.paymentservice.controller;
 
 import br.com.fiap.paymentservice.model.PaymentDTO;
 import br.com.fiap.paymentservice.service.PaymentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +17,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping(value = "/payment-service", produces = "application/json")
+@Api(value = "Payment", description = "Payment Service REST API")
 public class PaymentController {
 
     private PaymentService paymentService;
@@ -22,7 +27,8 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-
+    @ApiOperation(httpMethod = "GET", value = "Método get para buscar uma transação filtrando por id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Retorna um PaymentDTO com uma mensagem de sucesso", response = PaymentDTO.class)})
     @GetMapping("/{idTransaction}")
     public ResponseEntity<PaymentDTO> findByIdTransaction(@PathVariable(value="idTransaction") String idTransaction){
         System.out.printf("findByIdTransaction %s", idTransaction);
